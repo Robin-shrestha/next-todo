@@ -4,7 +4,7 @@ import { isEmpty } from "lodash";
 import ErrorComponent from "../component/ErrorComponent";
 let initialState = {
   todo: "",
-  completed: "",
+  completed: false,
 };
 
 const Todo = () => {
@@ -104,6 +104,8 @@ const Todo = () => {
   return (
     <div>
       <fieldset>
+        <legend>Add TODO:</legend>
+
         <form ref={formRef} onSubmit={onSubmit} onReset={reset}>
           <div>
             <label>My Todo: </label>
@@ -118,7 +120,7 @@ const Todo = () => {
               checked={todo.completed}
               onChange={onChange}
             />
-            {errors.completed ? <p>{errors.completed}</p> : null}
+            <ErrorComponent errorList={errors} name={"completed"} />{" "}
           </div>
           <div>
             <button type="submit">Add</button>
