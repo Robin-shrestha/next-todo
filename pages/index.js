@@ -1,13 +1,15 @@
 import React, { useState, useRef } from "react";
-import todoList from "../mockStorage";
-import { isEmpty } from "lodash";
+import todoList from "../mockStorage.txt";
 import ErrorComponent from "../component/ErrorComponent";
+import path from "path";
+import fs from "fs";
+
 let initialState = {
   todo: "",
   completed: false,
 };
 
-const Todo = () => {
+const Todo = ({ todoList }) => {
   const formRef = useRef();
   const [todo, setTodo] = useState(initialState);
   const [errors, setErrors] = useState([]);
@@ -178,3 +180,14 @@ const Todo = () => {
 };
 
 export default Todo;
+
+export async function getStaticProps(context) {
+  // TODO get todlosit from db whenyou have one
+
+  const filePath = path.join(process.cwd(), "mockStorage.txt");
+  const fileContents = fs.readFileSync(filePath, "utf8");
+  const todoList = JSON.parse(fileContents);
+  return {
+    props: { todoList },
+  };
+}
